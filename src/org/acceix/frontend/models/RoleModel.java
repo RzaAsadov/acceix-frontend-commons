@@ -36,7 +36,7 @@ public class RoleModel {
     
     private static List<RoleModel> rolelist = new LinkedList<>();
         
-    private static int updateAfterRequestCount=100;
+    private static int updateAfterRequestCount=1;
     
     private static int currentRequestCount=-1;
 

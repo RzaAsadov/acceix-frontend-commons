@@ -124,7 +124,7 @@ public class AdminFunctions {
         
         public boolean isGroupExists(String groupname,int owneruserid) throws MachineDataException, ClassNotFoundException, SQLException {
             
-                MachineDataSet machineDataSet = nDataConnector.getTable("groups")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_groups")
                                             .select()
                                                 .getColumn("id")
                                             .where()
@@ -142,7 +142,7 @@ public class AdminFunctions {
         
         public boolean isRoleSetNameExists(String rolesetname,int owneruserid) throws MachineDataException, ClassNotFoundException, SQLException {
             
-                MachineDataSet machineDataSet = nDataConnector.getTable("rolesets")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_rolesets")
                                             .select()
                                                 .getColumn("id")
                                             .where()
@@ -182,7 +182,7 @@ public class AdminFunctions {
         public void addGroup(String groupname,String groupdesc,int owneruserid,int mandatory) throws SQLException, ClassNotFoundException {
 
             
-            nDataConnector.getTable("groups")
+            nDataConnector.getTable("npt_groups")
                                     .insert()
                                         .add("groupname",groupname)
                                         .add("groupdesc",groupdesc)
@@ -197,7 +197,7 @@ public class AdminFunctions {
         public void addLinkedGroup(int groupid,int userid) throws SQLException, ClassNotFoundException {
 
             
-            nDataConnector.getTable("linked_groups")
+            nDataConnector.getTable("npt_linked_groups")
                                     .insert()
                                         .add("groupid",groupid)
                                         .add("userid",userid)
@@ -232,7 +232,7 @@ public class AdminFunctions {
             try {
             
                 if (setid < 0) {
-                    MachineDataSet dataSet = nDataConnector.getTable("rolesets")
+                    MachineDataSet dataSet = nDataConnector.getTable("npt_rolesets")
                                                                     .select()
                                                                         .getColumn("MAX(setid) as maxsetidvalue")
                                                                     .where()
@@ -244,7 +244,7 @@ public class AdminFunctions {
                     }
                 }
 
-                nDataConnector.getTable("rolesets")
+                nDataConnector.getTable("npt_rolesets")
                                         .insert()
                                             .add("setid",setid)
                                             .add("roleid",roleid)
@@ -267,7 +267,7 @@ public class AdminFunctions {
         public void delRoleSet(int setid,int owneruserid) throws MachineDataException, ClassNotFoundException, SQLException {
             
             
-            nDataConnector.getTable("rolesets")
+            nDataConnector.getTable("npt_rolesets")
                                     .delete()
                                     .where()
                                         .eq("setid", setid)
@@ -280,7 +280,7 @@ public class AdminFunctions {
         // Security checked
         public void delRoleFromRoleSet(int setid,int roleid,int owneruserid) throws MachineDataException, ClassNotFoundException, SQLException {
             
-            nDataConnector.getTable("rolesets")
+            nDataConnector.getTable("npt_rolesets")
                                     .delete()
                                     .where()
                                         .eq("setid", setid)
@@ -294,7 +294,7 @@ public class AdminFunctions {
         // Security checked
         public void delGroup(int groupid,int owneruserid) throws MachineDataException, ClassNotFoundException, SQLException {
             
-            nDataConnector.getTable("groups")
+            nDataConnector.getTable("npt_groups")
                                     .delete()
                                     .where()
                                         .eq("id", groupid)         
@@ -317,7 +317,7 @@ public class AdminFunctions {
         // Security checked
         public void delLinkedGroup(int groupid,int userid) throws MachineDataException, ClassNotFoundException, SQLException {
 
-            nDataConnector.getTable("linked_groups")
+            nDataConnector.getTable("npt_linked_groups")
                                     .delete()
                                     .where()
                                         .eq("groupid", groupid)
@@ -350,7 +350,7 @@ public class AdminFunctions {
             List<String> result = new ArrayList<>();
             try {
                     try (Connection c = connect()) {
-                        String sql = "select rolename from " + schemaName + "rolelist where id IN (SELECT roleid FROM rolesets WHERE setid = (select rolesetid from npt_users where id = ?))";
+                        String sql = "select rolename from " + schemaName + "npt_rolelist where id IN (SELECT roleid FROM npt_rolesets WHERE setid = (select rolesetid from npt_users where id = ?))";
                         try (PreparedStatement stmt = getPreparedStatement(c, sql)) {
                             stmt.setInt(1, userid);
                             //stmt.setInt(2, groupid);
@@ -469,7 +469,7 @@ public class AdminFunctions {
         
         public int getGroupId(String groupname) throws MachineDataException, ClassNotFoundException, SQLException {
             
-                MachineDataSet machineDataSet = nDataConnector.getTable("groups")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_groups")
                                             .select()
                                                 .getColumn("id")
                                             .where()
@@ -509,7 +509,7 @@ public class AdminFunctions {
         
         public String getTokenOfDomain (String domain) throws ClassNotFoundException, SQLException  {
 
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("domain_token")
                                             .where()
@@ -527,7 +527,7 @@ public class AdminFunctions {
         
         public int getIdOfDomain (String domain) throws ClassNotFoundException, SQLException  {
 
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("id")
                                             .where()
@@ -545,7 +545,7 @@ public class AdminFunctions {
 
         public String getTitleOfDomain (String domain) throws ClassNotFoundException, SQLException  {
 
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("title")
                                             .where()
@@ -564,7 +564,7 @@ public class AdminFunctions {
         
         public String getMainpageOfDomain (String domain) throws ClassNotFoundException, SQLException  {
 
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("mainpage")
                                             .where()
@@ -582,7 +582,7 @@ public class AdminFunctions {
         
         public String getSignInPageOfDomain (String domain) throws ClassNotFoundException, SQLException  {
 
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("signinpage")
                                             .where()
@@ -600,7 +600,7 @@ public class AdminFunctions {
         
         public boolean getWebRegistrationStatus (String domain) throws ClassNotFoundException, SQLException  {
 
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("enable_web_registration")
                                             .where()
@@ -618,7 +618,7 @@ public class AdminFunctions {
 
         public String getSignUpPageOfDomain (String domain) throws ClassNotFoundException, SQLException  {
 
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("signuppage")
                                             .where()
@@ -637,7 +637,7 @@ public class AdminFunctions {
         
         public String getDomainByToken (String token) throws ClassNotFoundException, SQLException  {
             
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("url")
                                             .where()
@@ -654,7 +654,7 @@ public class AdminFunctions {
         
         public String getDomainById (String id) throws ClassNotFoundException, SQLException  {
             
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("url")
                                             .where()
@@ -673,7 +673,7 @@ public class AdminFunctions {
             
                 Map<String,String> domainTokenList = new LinkedHashMap<>();
             
-                MachineDataSet machineDataSet = nDataConnector.getTable("domains")
+                MachineDataSet machineDataSet = nDataConnector.getTable("npt_domains")
                                             .select()
                                                 .getColumn("domain")
                                                 .getColumn("domain_token")
@@ -726,7 +726,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {            
-                    String sql = "select u.username as username,u.mdesc as mdesc,u.groupid as groupid,u.rolesetid as rolesetid,u.password as password,u.domain_id as domain_id from " + schemaName + "npt_users as u," + schemaName + "groups as g where u.id = ? and u.groupid = g.id";
+                    String sql = "select u.username as username,u.mdesc as mdesc,u.groupid as groupid,u.rolesetid as rolesetid,u.password as password,u.domain_id as domain_id from " + schemaName + "npt_users as u," + schemaName + "npt_groups as g where u.id = ? and u.groupid = g.id";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, userid);
                         resultDataSet = resultConverter.resultSetToMachineDataSet(pstmt.executeQuery());
@@ -746,7 +746,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {
-                    String sql = "select u.id as id,u.username as username,u.mdesc as mdesc,g.groupname as groupname,r.rolesetname as rolesetname from " + schemaName + "npt_users as u," + schemaName + "groups as g," + schemaName + "rolesets as r where u.groupid = g.id and u.rolesetid = r.setid and u.groupid IN (select id from groups where owneruserid = ?)  group by u.id,u.username,u.mdesc,g.groupname,r.rolesetname order by u.id DESC";
+                    String sql = "select u.id as id,u.username as username,u.mdesc as mdesc,g.groupname as groupname,r.rolesetname as rolesetname from " + schemaName + "npt_users as u," + schemaName + "npt_groups as g," + schemaName + "npt_rolesets as r where u.groupid = g.id and u.rolesetid = r.setid and u.groupid IN (select id from npt_groups where owneruserid = ?)  group by u.id,u.username,u.mdesc,g.groupname,r.rolesetname order by u.id DESC";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, owneruserid);
                         resultDataSet = resultConverter.resultSetToMachineDataSet(pstmt.executeQuery());
@@ -765,7 +765,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {                                
-                    String sql = "select id,groupname,groupdesc from " + schemaName + "groups where owneruserid = ? OR id IN (select groupid from " + schemaName + "linked_groups where userid = ?) order by id DESC";
+                    String sql = "select id,groupname,groupdesc from " + schemaName + "npt_groups where owneruserid = ? OR id IN (select groupid from " + schemaName + "npt_linked_groups where userid = ?) order by id DESC";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, owneruserid);
                         pstmt.setInt(2, owneruserid);
@@ -786,7 +786,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {                                
-                    String sql = "select gr.id as id,gr.groupname as groupname,gr.groupdesc as groupdesc,count(agents.id) as groupsize from " + schemaName + "groups as gr," + schemaName + "npt_users as agents where (gr.owneruserid = ? OR gr.id IN (select groupid from linked_groups where userid = ?)) and agents.groupid = gr.id group by gr.id,gr.groupname,gr.groupdesc order by gr.id";
+                    String sql = "select gr.id as id,gr.groupname as groupname,gr.groupdesc as groupdesc,count(agents.id) as groupsize from " + schemaName + "npt_groups as gr," + schemaName + "npt_users as agents where (gr.owneruserid = ? OR gr.id IN (select groupid from npt_linked_groups where userid = ?)) and agents.groupid = gr.id group by gr.id,gr.groupname,gr.groupdesc order by gr.id";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, owneruserid);
                         pstmt.setInt(2, owneruserid);
@@ -806,7 +806,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {            
-                    String sql = "select gr.id as id,gr.groupname as groupname,gr.groupdesc as groupdesc,count(agents.id) as groupsize from " + schemaName + "groups as gr," + schemaName + "online_agents as agents where (gr.owneruserid = ? OR gr.id IN (select groupid from linked_groups where userid = ?)) and agents.ownergroupid = gr.id and agents.muser is not null group by gr.id,gr.groupname,gr.groupdesc order by gr.id";
+                    String sql = "select gr.id as id,gr.groupname as groupname,gr.groupdesc as groupdesc,count(agents.id) as groupsize from " + schemaName + "npt_groups as gr," + schemaName + "online_agents as agents where (gr.owneruserid = ? OR gr.id IN (select groupid from npt_linked_groups where userid = ?)) and agents.ownergroupid = gr.id and agents.muser is not null group by gr.id,gr.groupname,gr.groupdesc order by gr.id";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, owneruserid);
                         pstmt.setInt(2, owneruserid);
@@ -826,7 +826,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {            
-                    String sql = "select lg.groupid as groupid,g.groupname as groupname,g.groupdesc as groupdesc from " + schemaName + "linked_groups as lg," + schemaName + "groups as g where lg.userid = ? and lg.groupid = g.id order by lg.groupid DESC";
+                    String sql = "select lg.groupid as groupid,g.groupname as groupname,g.groupdesc as groupdesc from " + schemaName + "npt_linked_groups as lg," + schemaName + "npt_groups as g where lg.userid = ? and lg.groupid = g.id order by lg.groupid DESC";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, linkeduserid);
                         resultDataSet = resultConverter.resultSetToMachineDataSet(pstmt.executeQuery());
@@ -851,7 +851,7 @@ public class AdminFunctions {
                 
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {            
-                    String sql = "select id,rolename,roledesc from " + schemaName + "rolelist order by roledesc ASC";
+                    String sql = "select id,rolename,roledesc from " + schemaName + "npt_rolelist order by roledesc ASC";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         resultDataSet = resultConverter.resultSetToMachineDataSet(pstmt.executeQuery());
                         while (resultDataSet.next()) {
@@ -870,7 +870,7 @@ public class AdminFunctions {
             
             MachineDataSet resultDataSet;
             try (Connection c = connect()) {
-                String sql = "select setid,rolesetname,rolesetdesc from " + schemaName + "rolesets where owneruserid = ? group by rolesetname,rolesetdesc,setid order by setid DESC";
+                String sql = "select setid,rolesetname,rolesetdesc from " + schemaName + "npt_rolesets where owneruserid = ? group by rolesetname,rolesetdesc,setid order by setid DESC";
                 try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                     pstmt.setInt(1, owneruserid);
                     resultDataSet = resultConverter.resultSetToMachineDataSet(pstmt.executeQuery());
@@ -888,7 +888,7 @@ public class AdminFunctions {
                 
                 int rolesetIdFromDb;
                 try (Connection c = connect()) {            
-                    String sql = "select setid from " + schemaName + "rolesets where rolesetname = ? group by setid";
+                    String sql = "select setid from " + schemaName + "npt_rolesets where rolesetname = ? group by setid";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setString(1, rolesetName);
                         ResultSet resultSet = pstmt.executeQuery();
@@ -915,7 +915,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {
-                    String sql = "select rs.roleid as roleid,rl.rolename as rolename from " + schemaName + "rolesets as rs," + schemaName + "rolelist as rl where rs.owneruserid = ? and rs.setid = ? and rs.roleid > 1 and rl.id = rs.roleid order by rs.id";
+                    String sql = "select rs.roleid as roleid,rl.rolename as rolename from " + schemaName + "npt_rolesets as rs," + schemaName + "npt_rolelist as rl where rs.owneruserid = ? and rs.setid = ? and rs.roleid > 1 and rl.id = rs.roleid order by rs.id";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, owneruserid);
                         pstmt.setInt(2, setid);
@@ -935,7 +935,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {            
-                    String sql = "select rolesetname,rolesetdesc from " + schemaName + "rolesets where owneruserid = ? and setid = ? group by rolesetname,rolesetdesc";
+                    String sql = "select rolesetname,rolesetdesc from " + schemaName + "npt_rolesets where owneruserid = ? and setid = ? group by rolesetname,rolesetdesc";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, owneruserid);
                         pstmt.setInt(2, setid);
@@ -955,7 +955,7 @@ public class AdminFunctions {
             try {
                 MachineDataSet resultDataSet;
                 try (Connection c = connect()) {
-                    String sql = "select groupname,groupdesc from " + schemaName + "groups where owneruserid = ? and id = ?";
+                    String sql = "select groupname,groupdesc from " + schemaName + "npt_groups where owneruserid = ? and id = ?";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, owneruserid);
                         pstmt.setInt(2, groupid);
@@ -976,7 +976,7 @@ public class AdminFunctions {
             try {
                 int userCountInGroup;
                     try (Connection c = connect()) {
-                        String sql = "select count(id) as userscount from " + schemaName + "npt_users where groupid = (select id from " + schemaName + "groups where owneruserid = ? and id = ?)";
+                        String sql = "select count(id) as userscount from " + schemaName + "npt_users where groupid = (select id from " + schemaName + "npt_groups where owneruserid = ? and id = ?)";
                         try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                             pstmt.setInt(1, owneruserid);
                             pstmt.setInt(2, groupid);
@@ -1023,7 +1023,7 @@ public class AdminFunctions {
             try {
                 int usersCountUsingRoleset;
                     try (Connection c = connect()) {
-                        String sql = "select count(id) as npt_userscount from " + schemaName + "npt_users where rolesetid = ? and groupid IN (select id from " + schemaName + "groups where owneruserid = ?)";
+                        String sql = "select count(id) as npt_userscount from " + schemaName + "npt_users where rolesetid = ? and groupid IN (select id from " + schemaName + "npt_groups where owneruserid = ?)";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         pstmt.setInt(1, rolesetid);
                         pstmt.setInt(2, owneruserid);
@@ -1049,7 +1049,7 @@ public class AdminFunctions {
             try {
                 int roleId;
                     try (Connection c = connect()) {
-                        String sql = "SELECT id FROM rolelist WHERE rolename = ?";
+                        String sql = "SELECT id FROM npt_rolelist WHERE rolename = ?";
                         try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                             pstmt.setString(1, rolename);
                             try (ResultSet rs = pstmt.executeQuery()) {
@@ -1072,7 +1072,7 @@ public class AdminFunctions {
             
             try {
                 try (Connection c = connect()) {
-                    String sql = "UPDATE " + schemaName + "npt_users set "+ columnName +" = ? WHERE ID = ? and GROUPID IN (select id from groups where owneruserid = ?)";
+                    String sql = "UPDATE " + schemaName + "npt_users set "+ columnName +" = ? WHERE ID = ? and GROUPID IN (select id from npt_groups where owneruserid = ?)";
                     try (PreparedStatement pstmt = getPreparedStatement(c, sql)) {
                         if (rowValue instanceof String) {
                             pstmt.setString(1, (String) rowValue);
@@ -1112,7 +1112,7 @@ public class AdminFunctions {
         // Security checked
         public void updateGroupSettings(int owneruserid,int groupid,String columnName,String rowValue) throws MachineDataException, ClassNotFoundException, SQLException {
             
-            nDataConnector.getTable("groups")
+            nDataConnector.getTable("npt_groups")
                                     .update()
                                         .updateVarchar(columnName, rowValue)
                                     .where()

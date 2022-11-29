@@ -34,6 +34,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -106,7 +107,7 @@ public class DataUtils {
     
     public String readRequestBody (InputStream in)  {
         
-                        BufferedReader bufr = new BufferedReader(new InputStreamReader(in));
+                        BufferedReader bufr = new BufferedReader(new InputStreamReader(in,StandardCharsets.UTF_8));
                 
                         String jsonSTR = "";
                         String inbuffer;
