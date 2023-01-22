@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2022 Rza Asadov (rza dot asadov at gmail dot com).
+ * Copyright 2022 Rza Asadov (rza at asadov dot me).
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,12 +37,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.acceix.ndatabaseclient.MachineDataException;
-import org.acceix.ndatabaseclient.MachineDataSet;
+import org.acceix.ndatabaseclient.exceptions.MachineDataException;
+import org.acceix.ndatabaseclient.dataset.MachineDataSet;
 
 /**
  *
- * @author Rza Asadov <rza.asadov at gmail.com>
+ * @author Rza Asadov <rza at asadov dot me>
  */
 public class FrontendSecurity {
     
